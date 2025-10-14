@@ -12,7 +12,8 @@ A real-time commodity price monitoring dashboard built for showcasing front-offi
 - Live data retrieval via `yfinance` with caching to minimize redundant network calls.
 - Analytics including daily returns, rolling moving averages, and day-over-day percentage changes.
 - Plotly charts for price history and returns, plus tabular snapshots of the latest market context.
-- Alert callouts when daily percentage moves breach user-defined thresholds.
+- KPI header with automated alerts when daily percentage moves breach user-defined thresholds.
+- One-click CSV export so candidates can share example market snapshots with interviewers.
 
 ## Quickstart
 ```bash

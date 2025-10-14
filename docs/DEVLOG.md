@@ -14,3 +14,8 @@
 - **Change:** Delivered analytics layer covering returns, moving averages, and alert-ready daily change calculations.
 - **Why:** Traders need both momentum context and percent move summaries to act on pricing signals.
 - **Alternatives considered:** Calculating metrics directly in Streamlit, but that would complicate testing and reuse.
+
+## 2025-10-14
+- **Change:** Built Streamlit UI with Plotly charts, KPI alerts, caching, and CSV export.
+- **Why:** Showcase front-office friendly UX where traders can filter, visualise, and react quickly.
+- **Alternatives considered:** Bokeh dashboard, but Streamlit aligned better with rapid prototyping and deployment simplicity.
