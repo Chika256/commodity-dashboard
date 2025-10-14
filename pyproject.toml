@@ -1,0 +1,24 @@
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+select = ["E", "F", "I", "B", "UP", "S", "N"]
+ignore = ["E203"]
+exclude = [".venv", "build", "dist"]
+
+[tool.ruff.isort]
+known-first-party = ["src"]
+combine-as-imports = true
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+pythonpath = ["."]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict = false
+warn_unused_ignores = true
