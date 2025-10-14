@@ -36,8 +36,8 @@ def test_cached_loader(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(app, "fetch_prices", fake_fetch)
     app.load_price_data.clear()
 
-    start = dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc)
-    end = dt.datetime(2024, 1, 2, tzinfo=dt.timezone.utc)
+    start = dt.datetime(2024, 1, 1, tzinfo=dt.UTC)
+    end = dt.datetime(2024, 1, 2, tzinfo=dt.UTC)
     result = app.load_price_data(("CL=F",), start, end, "1d")
 
     pd.testing.assert_frame_equal(result, sample)

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 import pandas as pd
 import streamlit as st
@@ -48,12 +48,16 @@ def _infer_date_range(default_days: int) -> tuple[dt.date, dt.date]:
 def _parse_moving_average_input(selection: Iterable[int]) -> tuple[int, ...]:
     windows = sorted({int(window) for window in selection if int(window) > 0})
     if not windows:
-        st.warning("Please select at least one moving-average window; defaulting to 20.")
+        st.warning(
+            "Please select at least one moving-average window; defaulting to 20."
+        )
         return (20,)
     return tuple(windows)
 
 
-def _render_kpis(latest_rows: pd.DataFrame, changes: pd.Series, threshold: float) -> None:
+def _render_kpis(
+    latest_rows: pd.DataFrame, changes: pd.Series, threshold: float
+) -> None:
     """Display per-ticker KPIs in responsive columns."""
 
     columns = st.columns(len(latest_rows))
@@ -74,7 +78,9 @@ def _render_kpis(latest_rows: pd.DataFrame, changes: pd.Series, threshold: float
             alerting.append((ticker, change_pct))
 
     if alerting:
-        formatted = ", ".join(f"{ticker} ({change:+.2f}%)" for ticker, change in alerting)
+        formatted = ", ".join(
+            f"{ticker} ({change:+.2f}%)" for ticker, change in alerting
+        )
         st.warning(
             f"Alert threshold breached for: {formatted}.",
             icon="🚨",
@@ -137,7 +143,7 @@ def main() -> None:
     )
 
     default_start, default_end = _infer_date_range(settings.default_lookback_days)
-    # Sidebar inputs provide guardrails and educational tooltips for students new to FX/commodities.
+    # Sidebar inputs double as an explainer for candidates new to commodities analytics.
     tickers = st.sidebar.multiselect(
         "Commodities",
         options=settings.default_tickers,
@@ -151,7 +157,7 @@ def main() -> None:
     date_range = st.sidebar.date_input(
         "Date range",
         value=(default_start, default_end),
-        help="Use a narrower window when selecting high-frequency intervals like 5 minutes.",
+        help="Pick shorter ranges when analysing high-frequency (5m) data.",
     )
     if isinstance(date_range, tuple):
         start_date, end_date = date_range
@@ -165,7 +171,7 @@ def main() -> None:
         "Interval",
         options=("5m", "1h", "1d"),
         index=(0 if settings.default_interval == "5m" else 2),
-        help="Higher frequency unlocks intraday monitoring; daily keeps long-term context.",
+        help="Intraday intervals surface live context; daily favours broader trends.",
     )
 
     ma_choice = st.sidebar.multiselect(

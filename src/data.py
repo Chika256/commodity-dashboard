@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import logging
 import time
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-from typing import Iterable, Sequence
 
 import pandas as pd
 import yfinance as yf
@@ -39,7 +39,9 @@ def _prepare_index(data: pd.DataFrame, tickers: Sequence[str]) -> pd.DataFrame:
     """
 
     if isinstance(data.columns, pd.MultiIndex):
-        tidy = data.stack(level=1).rename_axis(index=["datetime", "ticker"]).reset_index()
+        tidy = (
+            data.stack(level=1).rename_axis(index=["datetime", "ticker"]).reset_index()
+        )
     else:
         # yfinance returns a flat index for single tickers; pivot to match multi format.
         tidy = (
@@ -71,10 +73,14 @@ def _normalise_columns(tidy: pd.DataFrame) -> pd.DataFrame:
     float_cols = ["open", "high", "low", "close", "adj_close"]
     for column in float_cols:
         renamed[column] = pd.to_numeric(renamed[column], errors="coerce").astype(float)
-    renamed["volume"] = pd.to_numeric(renamed["volume"], errors="coerce").fillna(0).astype(int)
+    renamed["volume"] = (
+        pd.to_numeric(renamed["volume"], errors="coerce").fillna(0).astype(int)
+    )
 
     renamed = renamed.sort_values(["ticker", "datetime"]).reset_index(drop=True)
-    return renamed[["ticker", "datetime", "open", "high", "low", "close", "adj_close", "volume"]]
+    return renamed[
+        ["ticker", "datetime", "open", "high", "low", "close", "adj_close", "volume"]
+    ]
 
 
 def fetch_prices(
@@ -103,14 +109,17 @@ def fetch_prices(
         Override exponential backoff multiplier.
     """
 
-    tickers = tuple(dict.fromkeys(tickers))  # Removes duplicates while preserving order.
+    tickers = tuple(
+        dict.fromkeys(tickers)
+    )  # Removes duplicates while preserving order.
     settings = get_settings()
 
     if not tickers:
         raise ValueError("At least one ticker is required to fetch prices.")
     if len(tickers) > settings.max_tickers:
         raise ValueError(
-            f"Requested {len(tickers)} tickers but max_tickers is {settings.max_tickers}."
+            f"Requested {len(tickers)} tickers but "
+            f"max_tickers is {settings.max_tickers}."
         )
 
     interval = interval or settings.default_interval
@@ -141,13 +150,19 @@ def fetch_prices(
             tidy = _prepare_index(raw, tickers)
             normalised = _normalise_columns(tidy)
             return normalised
-        except Exception as exc:  # noqa: BLE001 - we need to retry on anything transient.
+        except (
+            Exception
+        ) as exc:  # noqa: BLE001 - we need to retry on anything transient.
             last_exception = exc
             attempt += 1
             delay = backoff * attempt
-            LOGGER.warning("Price download failed (attempt %s/%s): %s", attempt, retries, exc)
+            LOGGER.warning(
+                "Price download failed (attempt %s/%s): %s", attempt, retries, exc
+            )
 
-    message = "Price download failed after retries" if last_exception else "Unknown failure"
+    message = (
+        "Price download failed after retries" if last_exception else "Unknown failure"
+    )
     raise DataDownloadError(message) from last_exception
 
 

@@ -5,11 +5,16 @@ target-version = ["py311"]
 [tool.ruff]
 line-length = 88
 target-version = "py311"
-select = ["E", "F", "I", "B", "UP", "S", "N"]
-ignore = ["E203"]
 exclude = [".venv", "build", "dist"]
 
-[tool.ruff.isort]
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "N"]
+ignore = ["E203"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.ruff.lint.isort]
 known-first-party = ["src"]
 combine-as-imports = true
 

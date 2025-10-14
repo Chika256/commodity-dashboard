@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Tuple
 
-from pydantic import BaseSettings, Field, conint, confloat, validator
+from pydantic import BaseSettings, Field, confloat, conint, validator
 
 
 class DashboardSettings(BaseSettings):
@@ -17,7 +16,7 @@ class DashboardSettings(BaseSettings):
     scattering magic numbers across the codebase.
     """
 
-    default_tickers: Tuple[str, ...] = Field(
+    default_tickers: tuple[str, ...] = Field(
         ("CL=F", "BZ=F", "NG=F", "GC=F", "SI=F"),
         description="Tickers displayed when the app boots.",
     )
@@ -29,7 +28,7 @@ class DashboardSettings(BaseSettings):
     default_lookback_days: conint(gt=0) = Field(
         365, description="Number of trading days to look back when no range is chosen."
     )
-    moving_average_windows: Tuple[conint(gt=0), ...] = Field(
+    moving_average_windows: tuple[conint(gt=0), ...] = Field(
         (20, 50), description="Rolling windows (in periods) applied to price series."
     )
     cache_ttl_seconds: conint(gt=0) = Field(
@@ -55,7 +54,7 @@ class DashboardSettings(BaseSettings):
         env_file = ".env"
 
     @validator("moving_average_windows")
-    def ensure_sorted(cls, value: Tuple[int, ...]) -> Tuple[int, ...]:
+    def ensure_sorted(cls, value: tuple[int, ...]) -> tuple[int, ...]:  # noqa: N805
         """Keep moving-average windows sorted for predictable UI ordering."""
         return tuple(sorted(value))
 

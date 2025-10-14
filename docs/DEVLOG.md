@@ -29,3 +29,8 @@
 - **Change:** Adjusted data-layer unit test to assert our wrapped `DataDownloadError` contract.
 - **Why:** Keeps test expectations aligned with the retry logic surfacing root causes via exception chaining.
 - **Alternatives considered:** Relaxing the error handling to bubble raw ValueErrors, but that would leak inconsistent messaging into the UI.
+
+## 2025-10-14
+- **Change:** Applied Ruff fixes, modern typing updates, and tightened chart hover templates.
+- **Why:** Keeps the codebase idiomatic and ensures lint/test automation passes cleanly for recruiters.
+- **Alternatives considered:** Suppressing Ruff warnings, but we chose to embrace the recommendations for long-term maintainability.

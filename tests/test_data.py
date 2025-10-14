@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 import pandas as pd
 import pytest
@@ -15,7 +15,7 @@ class DummyDownloader:
 
     def __init__(self, frame: pd.DataFrame):
         self.frame = frame
-        self.calls: list[Dict[str, Any]] = []
+        self.calls: list[dict[str, Any]] = []
 
     def __call__(self, *args: Any, **kwargs: Any) -> pd.DataFrame:
         self.calls.append({"args": args, "kwargs": kwargs})

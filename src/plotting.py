@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -32,7 +32,8 @@ def price_chart(price_frame: pd.DataFrame, moving_windows: Iterable[int]) -> go.
                 name=f"{ticker} close",
                 line=dict(color=color, width=2),
                 hovertemplate=(
-                    "<b>%{text}</b><br>Price: %{y:.2f}<br>Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
+                    "<b>%{text}</b><br>Price: %{y:.2f}<br>"
+                    "Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
                 ),
                 text=[ticker] * len(group),
             )
@@ -49,7 +50,8 @@ def price_chart(price_frame: pd.DataFrame, moving_windows: Iterable[int]) -> go.
                     name=f"{ticker} MA {window}",
                     line=dict(color=color, dash="dash"),
                     hovertemplate=(
-                        "<b>%{text}</b><br>MA {window}: %{y:.2f}<br>Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
+                        f"<b>%{{text}}</b><br>MA {window}: %{{y:.2f}}<br>"
+                        "Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
                     ),
                     text=[ticker] * len(group),
                     legendgroup=f"{ticker}-ma",
@@ -87,7 +89,8 @@ def returns_chart(returns_frame: pd.DataFrame) -> go.Figure:
                 name=f"{ticker} daily return",
                 marker_color=color,
                 hovertemplate=(
-                    "<b>%{text}</b><br>Return: %{y:.2%}<br>Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
+                    "<b>%{text}</b><br>Return: %{y:.2%}<br>"
+                    "Time: %{x|%Y-%m-%d %H:%M}<extra></extra>"
                 ),
                 text=[ticker] * len(group),
             )

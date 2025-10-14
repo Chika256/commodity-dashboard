@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Sequence
+from collections.abc import Iterable, Sequence
 
 import numpy as np
 import pandas as pd
@@ -10,7 +10,9 @@ import pandas as pd
 _REQUIRED_COLUMNS = {"ticker", "datetime", "adj_close", "close"}
 
 
-def _validate_frame(price_frame: pd.DataFrame, required: Sequence[str] | None = None) -> pd.DataFrame:
+def _validate_frame(
+    price_frame: pd.DataFrame, required: Sequence[str] | None = None
+) -> pd.DataFrame:
     """Ensure the dataframe contains the columns we rely on and is sorted.
 
     Returning a sorted copy keeps downstream analytics deterministic while leaving
@@ -22,7 +24,9 @@ def _validate_frame(price_frame: pd.DataFrame, required: Sequence[str] | None = 
     if missing:
         raise ValueError(f"Dataframe is missing required columns: {sorted(missing)}")
 
-    sorted_frame = price_frame.sort_values(["ticker", "datetime"]).reset_index(drop=True)
+    sorted_frame = price_frame.sort_values(["ticker", "datetime"]).reset_index(
+        drop=True
+    )
     return sorted_frame
 
 
@@ -38,13 +42,17 @@ def compute_daily_returns(price_frame: pd.DataFrame) -> pd.DataFrame:
     frame["adj_close"] = frame.groupby("ticker")["adj_close"].ffill()
     returns = frame.copy()
     returns["daily_return"] = (
-        returns.groupby("ticker")["adj_close"].pct_change().replace([np.inf, -np.inf], np.nan)
+        returns.groupby("ticker")["adj_close"]
+        .pct_change()
+        .replace([np.inf, -np.inf], np.nan)
     )
     returns["daily_return"] = returns["daily_return"].fillna(0.0)
     return returns[["ticker", "datetime", "daily_return"]]
 
 
-def add_moving_averages(price_frame: pd.DataFrame, windows: Iterable[int]) -> pd.DataFrame:
+def add_moving_averages(
+    price_frame: pd.DataFrame, windows: Iterable[int]
+) -> pd.DataFrame:
     """Add moving-average columns (``ma_<window>``) to the dataframe copy."""
 
     frame = _validate_frame(price_frame)
@@ -55,11 +63,9 @@ def add_moving_averages(price_frame: pd.DataFrame, windows: Iterable[int]) -> pd
     enriched = frame.copy()
     for window in windows:
         column_name = f"ma_{window}"
-        enriched[column_name] = (
-            enriched.groupby("ticker", group_keys=False)["adj_close"].transform(
-                lambda series: series.rolling(window, min_periods=1).mean()
-            )
-        )
+        enriched[column_name] = enriched.groupby("ticker", group_keys=False)[
+            "adj_close"
+        ].transform(lambda series, w=window: series.rolling(w, min_periods=1).mean())
     return enriched
 
 
