@@ -14,6 +14,7 @@ A real-time commodity price monitoring dashboard built for showcasing front-offi
 - Plotly charts for price history and returns, plus tabular snapshots of the latest market context.
 - KPI header with automated alerts when daily percentage moves breach user-defined thresholds.
 - One-click CSV export so candidates can share example market snapshots with interviewers.
+- Trading-floor inspired dark theme configured via `.streamlit/config.toml`.
 
 ## Quickstart
 ```bash

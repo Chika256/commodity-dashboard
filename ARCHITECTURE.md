@@ -35,6 +35,10 @@ This document explains how the CCI Commodity Dashboard pulls market data, comput
 - Validation ensures required columns (`Open`, `High`, `Low`, `Close`, `Volume`) exist before analytics run.
 - App-level error boundaries capture exceptions, presenting actionable remediation steps (e.g., widen the date range, reduce tickers).
 
+## Theming
+- Streamlit theme in `.streamlit/config.toml` keeps legibility in low-light trading floors while offering a distinct CCI-inspired palette.
+- Configuration is versioned (unlike cache outputs) by relaxing the `.gitignore` to allow the theme file only.
+
 ## Decisions & trade-offs
 - **Streamlit for UI**: Enables rapid, interactive dashboards without heavy frontend work. Trade-off: less granular control vs. React, but acceptable for fast prototypes.
 - **yfinance data source**: Free and accessible without keys. Trade-off: Dependent on Yahoo Finance uptime; mitigated via retries and caching.

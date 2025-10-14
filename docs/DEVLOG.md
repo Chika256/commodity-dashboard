@@ -19,3 +19,8 @@
 - **Change:** Built Streamlit UI with Plotly charts, KPI alerts, caching, and CSV export.
 - **Why:** Showcase front-office friendly UX where traders can filter, visualise, and react quickly.
 - **Alternatives considered:** Bokeh dashboard, but Streamlit aligned better with rapid prototyping and deployment simplicity.
+
+## 2025-10-14
+- **Change:** Added Streamlit dark theme and documented UI polish decisions.
+- **Why:** Align the demo with real trading floors that prefer low-glare dashboards.
+- **Alternatives considered:** Leaving the default Streamlit theme, but it felt too clinical for the target audience.

@@ -18,6 +18,8 @@ venv/
 
 # Streamlit cache and config
 .streamlit/
+!.streamlit/
+!.streamlit/config.toml
 
 # IDEs and editors
 .vscode/
