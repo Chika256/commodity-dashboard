@@ -9,3 +9,8 @@
 - **Change:** Implemented Pydantic settings and resilient data fetching with transformation tests.
 - **Why:** Ensure downstream analytics receive clean, validated market data with predictable schema.
 - **Alternatives considered:** Calling yfinance per ticker (simpler) but rejected to avoid N+1 network calls.
+
+## 2025-10-14
+- **Change:** Delivered analytics layer covering returns, moving averages, and alert-ready daily change calculations.
+- **Why:** Traders need both momentum context and percent move summaries to act on pricing signals.
+- **Alternatives considered:** Calculating metrics directly in Streamlit, but that would complicate testing and reuse.
