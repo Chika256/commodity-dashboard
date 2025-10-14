@@ -24,3 +24,8 @@
 - **Change:** Added Streamlit dark theme and documented UI polish decisions.
 - **Why:** Align the demo with real trading floors that prefer low-glare dashboards.
 - **Alternatives considered:** Leaving the default Streamlit theme, but it felt too clinical for the target audience.
+
+## 2025-10-14
+- **Change:** Adjusted data-layer unit test to assert our wrapped `DataDownloadError` contract.
+- **Why:** Keeps test expectations aligned with the retry logic surfacing root causes via exception chaining.
+- **Alternatives considered:** Relaxing the error handling to bubble raw ValueErrors, but that would leak inconsistent messaging into the UI.

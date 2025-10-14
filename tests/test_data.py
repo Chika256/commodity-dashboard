@@ -85,5 +85,6 @@ def test_fetch_prices_missing_columns(monkeypatch: pytest.MonkeyPatch) -> None:
     downloader = DummyDownloader(frame)
     monkeypatch.setattr(data.yf, "download", downloader)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(data.DataDownloadError) as excinfo:
         data.fetch_prices(["CL=F"], retries=1)
+    assert isinstance(excinfo.value.__cause__, ValueError)
