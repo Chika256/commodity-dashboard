@@ -34,3 +34,8 @@
 - **Change:** Applied Ruff fixes, modern typing updates, and tightened chart hover templates.
 - **Why:** Keeps the codebase idiomatic and ensures lint/test automation passes cleanly for recruiters.
 - **Alternatives considered:** Suppressing Ruff warnings, but we chose to embrace the recommendations for long-term maintainability.
+
+## 2025-10-14
+- **Change:** Replaced the frozen dataclass-based `DataDownloadError` with a standard exception to play nicely with Streamlit caching internals.
+- **Why:** Streamlit reassigns `__traceback__` on cached exceptions; the frozen dataclass blocked that and crashed the UI.
+- **Alternatives considered:** Catching the Streamlit context manager earlier, but the cleaner fix was to make the exception mutable like other RuntimeError subclasses.

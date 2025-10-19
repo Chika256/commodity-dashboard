@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 import time
 from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
 
 import pandas as pd
 import yfinance as yf
@@ -17,11 +16,12 @@ LOGGER = logging.getLogger(__name__)
 _REQUIRED_COLUMNS = ("Open", "High", "Low", "Close", "Adj Close", "Volume")
 
 
-@dataclass(frozen=True)
 class DataDownloadError(RuntimeError):
     """Raised when the Yahoo Finance request fails after retries."""
 
-    message: str
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+        self.message = message
 
     def __str__(self) -> str:  # pragma: no cover - delegation keeps repr tidy
         return self.message
