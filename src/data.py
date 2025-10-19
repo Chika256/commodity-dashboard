@@ -40,7 +40,9 @@ def _prepare_index(data: pd.DataFrame, tickers: Sequence[str]) -> pd.DataFrame:
 
     if isinstance(data.columns, pd.MultiIndex):
         tidy = (
-            data.stack(level=1).rename_axis(index=["datetime", "ticker"]).reset_index()
+            data.stack(level=1, future_stack=True)
+            .rename_axis(index=["datetime", "ticker"])
+            .reset_index()
         )
     else:
         # yfinance returns a flat index for single tickers; pivot to match multi format.

@@ -44,3 +44,8 @@
 - **Change:** Replaced the frozen dataclass-based `DataDownloadError` with a standard exception to play nicely with Streamlit caching internals.
 - **Why:** Streamlit reassigns `__traceback__` on cached exceptions; the frozen dataclass blocked that and crashed the UI.
 - **Alternatives considered:** Catching the Streamlit context manager earlier, but the cleaner fix was to make the exception mutable like other RuntimeError subclasses.
+
+## 2025-10-19
+- **Change:** Enabled pandas' `future_stack=True` during MultiIndex tidy-up to keep tests warning-free.
+- **Why:** Pandas 2.1 deprecates the legacy stack behaviour; opting-in preserves forward compatibility and quiets pytest output.
+- **Alternatives considered:** Filtering the warning in pytest.ini, but adjusting the data code gives us compatibility today and tomorrow.
