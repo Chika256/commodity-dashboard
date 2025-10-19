@@ -35,6 +35,11 @@
 - **Why:** Keeps the codebase idiomatic and ensures lint/test automation passes cleanly for recruiters.
 - **Alternatives considered:** Suppressing Ruff warnings, but we chose to embrace the recommendations for long-term maintainability.
 
+## 2025-10-19
+- **Change:** Swapped the Streamlit font to a supported option and expanded Yahoo Finance error messaging/documentation.
+- **Why:** Users hit empty responses when VPNs block Yahoo; clearer guidance prevents confusion.
+- **Alternatives considered:** Auto-detecting network reachability, but that adds latency and complexity relative to guidance.
+
 ## 2025-10-14
 - **Change:** Replaced the frozen dataclass-based `DataDownloadError` with a standard exception to play nicely with Streamlit caching internals.
 - **Why:** Streamlit reassigns `__traceback__` on cached exceptions; the frozen dataclass blocked that and crashed the UI.

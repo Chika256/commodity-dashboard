@@ -30,6 +30,10 @@ streamlit run app.py
 pytest
 ```
 
+## Troubleshooting
+- If the dashboard shows an “Unable to download data” message, Yahoo Finance may be blocked by your VPN or network filter. Try disconnecting from restrictive networks, widen the date range, or fall back to the daily interval.
+- Streamlit caches memoized responses; use the `⋮` menu → **Clear cache** if you change environments or encounter stale data.
+
 ## Screenshot
 ![Dashboard preview](docs/assets/dashboard-preview.png "Placeholder preview - replace with actual screenshot once captured")
 

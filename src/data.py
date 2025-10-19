@@ -160,9 +160,16 @@ def fetch_prices(
                 "Price download failed (attempt %s/%s): %s", attempt, retries, exc
             )
 
-    message = (
-        "Price download failed after retries" if last_exception else "Unknown failure"
-    )
+    if last_exception:
+        hint = (
+            "Price download failed after retries. Yahoo Finance may be unreachable "
+            "(VPN/proxy/firewall) or the selected tickers/interval have no data. "
+            "Try another network or VPN setting, widen the date range, or switch "
+            "to a daily interval."
+        )
+        message = f"{hint} Last error: {last_exception}"
+    else:
+        message = "Unknown failure while downloading prices."
     raise DataDownloadError(message) from last_exception
 
 
