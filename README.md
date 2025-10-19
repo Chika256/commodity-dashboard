@@ -1,6 +1,6 @@
 # CCI Commodity Dashboard
 
-A real-time commodity price monitoring dashboard built for showcasing front-office engineering skills relevant to Castleton Commodities International (CCI). The dashboard surfaces live market data, contextual analytics, and visualizations to support trading decisions for WTI crude, Brent, Natural Gas, Gold, and Silver.
+A real-time commodity price monitoring dashboard. The dashboard surfaces live market data, contextual analytics, and visualizations to support trading decisions for WTI crude, Brent, Natural Gas, Gold, and Silver.
 
 ## Why it matters for a front-office internship
 - Demonstrates ability to build resilient data pipelines and latency-aware UIs that traders rely on.
