@@ -1,11 +1,11 @@
-# CCI Commodity Dashboard
+#  Commodity Dashboard
 
 A real-time commodity price monitoring dashboard. The dashboard surfaces live market data, contextual analytics, and visualizations to support trading decisions for WTI crude, Brent, Natural Gas, Gold, and Silver.
 
 ## Why it matters for a front-office internship
 - Demonstrates ability to build resilient data pipelines and latency-aware UIs that traders rely on.
 - Highlights familiarity with commodities markets, intraday analytics, and risk-aware alerting.
-- Showcases production-ready Python tooling (testing, linting, pre-commit) expected in CCI engineering teams.
+- Showcases production-ready Python tooling (testing, linting, pre-commit).
 
 ## Features
 - Streamlit UI with interactive filters for tickers, date range, price interval, moving averages, and alert thresholds.
